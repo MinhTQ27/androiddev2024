@@ -10,7 +10,7 @@ Students are expected to:
 Student Info
 =======================
 
-* Name: *YourNameHere*
-* ID: *YourIdHere*
+* Name: Trịnh Quang Minh
+* ID: BA12-127
 * Group ID: *Your Group ID here*
 * Project Name: *Your Project Name here*
