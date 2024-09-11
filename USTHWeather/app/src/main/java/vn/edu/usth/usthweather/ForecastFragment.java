@@ -62,24 +62,7 @@ public class ForecastFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_forecast, container, false);
-        View view = new View(getContext());
-        view.setBackgroundColor(0x503399ff);
-
-        LinearLayout linearLayout = new LinearLayout(getContext());
-        linearLayout.setOrientation(LinearLayout.VERTICAL);
-
-        TextView textView = new TextView(getContext());
-        textView.setText("Thursday");
-
-        ImageView imageView = new ImageView(view.getContext());
-        imageView.setImageResource(R.drawable.weather_icon1);
-
-        linearLayout.addView(textView);
-        linearLayout.addView(imageView);
-        linearLayout.addView(view);
-
-        return linearLayout;
+        return inflater.inflate(R.layout.fragment_forecast, container, false);
     }
 }
 // TODO: Learn from ChatGPT and change the size of image
