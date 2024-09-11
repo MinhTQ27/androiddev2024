@@ -28,27 +28,27 @@ public class WeatherActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Log.i(TAG, "onStart() is called");
+        Log.i(TAG, "*******Start*******");
     }
     @Override
     protected void onPause() {
         super.onPause();
-        Log.i(TAG, "onPause() is called");
+        Log.i(TAG, "*******Pause*******");
     }
     @Override
     protected void onResume() {
         super.onResume();
-        Log.i(TAG, "onResume() is called");
+        Log.i(TAG, "*******Resume*******");
     }
     @Override
     protected void onStop() {
         super.onStop();
-        Log.i(TAG, "onStop() is called");
+        Log.i(TAG, "*******Stop*******");
     }
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.i(TAG, "onDestroy() is called");
+        Log.i(TAG, "*******Destroy*******");
     }
 
 }

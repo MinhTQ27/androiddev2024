@@ -7,6 +7,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -62,6 +65,21 @@ public class ForecastFragment extends Fragment {
 //        return inflater.inflate(R.layout.fragment_forecast, container, false);
         View view = new View(getContext());
         view.setBackgroundColor(0x503399ff);
-        return view;
+
+        LinearLayout linearLayout = new LinearLayout(getContext());
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
+
+        TextView textView = new TextView(getContext());
+        textView.setText("Thursday");
+
+        ImageView imageView = new ImageView(view.getContext());
+        imageView.setImageResource(R.drawable.weather_icon1);
+
+        linearLayout.addView(textView);
+        linearLayout.addView(imageView);
+        linearLayout.addView(view);
+
+        return linearLayout;
     }
 }
+// TODO: Learn from ChatGPT and change the size of image
