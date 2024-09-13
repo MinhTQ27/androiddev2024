@@ -3,52 +3,62 @@ package vn.edu.usth.usthweather;
 import android.os.Bundle;
 import android.util.Log;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentManager;
+
+import vn.edu.usth.usthweather.ForecastFragment;
 
 public class WeatherActivity extends AppCompatActivity {
-    private final String TAG = "WeatherActivity";
 
+    private static final String TAG = "WeatherActivity";
+    private DrawerLayout mDrawerLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
+        Log.i(TAG, "onCreate is called");
+
         setContentView(R.layout.activity_weather);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
-        ForecastFragment firstFragment = new ForecastFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.main, firstFragment).commit();
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        // Create a new instance of ForecastFragment
+        ForecastFragment forecastFragment = new ForecastFragment();
+
+        // Add the fragment to the 'container' FrameLayout using dynamic code
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().add(R.id.fragment_forecast, forecastFragment).commit();
     }
+
     @Override
     protected void onStart() {
         super.onStart();
-        Log.i(TAG, "*******Start*******");
+        Log.i(TAG, "onStart is called");
     }
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.i(TAG, "*******Pause*******");
-    }
+
     @Override
     protected void onResume() {
         super.onResume();
-        Log.i(TAG, "*******Resume*******");
+        Log.i(TAG, "onResume is called");
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.i(TAG, "onPause is called");
+    }
+
     @Override
     protected void onStop() {
         super.onStop();
-        Log.i(TAG, "*******Stop*******");
+        Log.i(TAG, "onStop is called");
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.i(TAG, "*******Destroy*******");
+        Log.i(TAG, "onDestroy is called");
     }
-
 }
