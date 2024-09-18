@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Thời tiết USTH</string>
+    <string name="hanoi_tab">Hà Nội</string>
+    <string name="hcm_tab">Thành phố Hồ Chí Minh</string>
+    <string name="danang_tab">Đà Nẵng</string>
+</resources>
