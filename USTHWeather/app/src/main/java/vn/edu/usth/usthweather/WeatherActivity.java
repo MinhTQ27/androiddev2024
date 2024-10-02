@@ -3,6 +3,7 @@ package vn.edu.usth.usthweather;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +21,7 @@ import java.io.InputStream;
 
 public class WeatherActivity extends AppCompatActivity {
     MediaPlayer mediaPlayer;
+    Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,5 +74,26 @@ public class WeatherActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void notification() {
+        Thread backThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(WeatherActivity.this, "Refresh from Another Thread.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+        backThread.start();
     }
 }
