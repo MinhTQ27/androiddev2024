@@ -5,6 +5,7 @@
     <dimen name="toolbar_height">56dp</dimen>
     <dimen name="padding_small">8dp</dimen>
     <dimen name="padding_large">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 
 
 </resources>

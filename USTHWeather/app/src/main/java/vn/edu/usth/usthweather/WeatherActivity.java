@@ -1,9 +1,12 @@
 package vn.edu.usth.usthweather;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -48,5 +51,26 @@ public class WeatherActivity extends AppCompatActivity {
         adapter.addFragment(WeatherAndForecastFragment.newInstance(), "Paris,France");
         adapter.addFragment(WeatherAndForecastFragment.newInstance(), "Thuong Hai, China ");
         viewPager.setAdapter(adapter);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.app_bar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.refresh_icon:
+                Toast.makeText(this, "Refreshing", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.more_icon:
+                Intent intent = new Intent(WeatherActivity.this, PrefActivity.class);
+                Toast.makeText(this, "New Activity", Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
