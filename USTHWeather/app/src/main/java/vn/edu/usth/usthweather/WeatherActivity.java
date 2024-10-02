@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,6 +40,7 @@ public class WeatherActivity extends AppCompatActivity {
 
         mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.sugar_lyrics);
         mediaPlayer.start();
+        requestNetwork();
     }
 
     @Override
@@ -76,24 +79,35 @@ public class WeatherActivity extends AppCompatActivity {
         }
     }
 
-    public void notification() {
-        Thread backThread = new Thread(new Runnable() {
+    public void requestNetwork() {
+        final Handler handler = new Handler(Looper.getMainLooper()) {
+            @Override
+            public void handleMessage(Message msg) {
+// This method is executed in main thread
+                String content = msg.getData().getString("server_response");
+                Toast.makeText(WeatherActivity.this, "Get network content", Toast.LENGTH_SHORT).show();
+            }
+        };
+        Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
+// this method is run in a worker thread
                 try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
+// wait for 5 seconds to simulate a long network access
+                    Thread.sleep(2500);
+                }
+                catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(WeatherActivity.this, "Refresh from Another Thread.", Toast.LENGTH_SHORT).show();
-                    }
-                });
+// Assume that we got our data from server
+                Bundle bundle = new Bundle();
+                bundle.putString("server_response", "some sample json here");
+// notify main thread
+                Message msg = new Message();
+                msg.setData(bundle);
+                handler.sendMessage(msg);
             }
         });
-        backThread.start();
+        t.start();
     }
 }
