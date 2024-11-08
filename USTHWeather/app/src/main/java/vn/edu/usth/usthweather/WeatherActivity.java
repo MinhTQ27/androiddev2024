@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+import android.os.AsyncTask;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -80,34 +81,28 @@ public class WeatherActivity extends AppCompatActivity {
     }
 
     public void requestNetwork() {
-        final Handler handler = new Handler(Looper.getMainLooper()) {
+        AsyncTask<Void, Void, String> task = new AsyncTask<Void, Void, String>() {
             @Override
-            public void handleMessage(Message msg) {
-// This method is executed in main thread
-                String content = msg.getData().getString("server_response");
-                Toast.makeText(WeatherActivity.this, "Get network content", Toast.LENGTH_SHORT).show();
-            }
-        };
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-// this method is run in a worker thread
+            protected String doInBackground(Void... voids) {
                 try {
-// wait for 5 seconds to simulate a long network access
-                    Thread.sleep(2500);
-                }
-                catch (InterruptedException e) {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-// Assume that we got our data from server
-                Bundle bundle = new Bundle();
-                bundle.putString("server_response", "some sample json here");
-// notify main thread
-                Message msg = new Message();
-                msg.setData(bundle);
-                handler.sendMessage(msg);
+                return "Request Network";
             }
-        });
-        t.start();
+
+            @Override
+            protected void onPostExecute(String content) {
+                Toast.makeText(WeatherActivity.this, content, Toast.LENGTH_SHORT).show();
+            }
+        };
+        task.execute();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        requestNetwork();
     }
 }
