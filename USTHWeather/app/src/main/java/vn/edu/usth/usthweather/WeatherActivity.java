@@ -125,10 +125,9 @@ public class WeatherActivity extends AppCompatActivity {
 
     // Perform a real network request to USTH’s server
     // «Upgrade» previous AsyncTask HttpURLConnection to Volley
-    private class DownloadImageTask {
+    private class DownloadImageTask  {
         private final Context context;
         private RequestQueue queue;
-
         public DownloadImageTask(WeatherActivity weatherActivity) {
             this.context = weatherActivity;
             this.queue = Volley.newRequestQueue(context);
@@ -160,5 +159,5 @@ public class WeatherActivity extends AppCompatActivity {
             // Add the request to the RequestQueue
             queue.add(imageRequest);
         }
-    }
+}
 }

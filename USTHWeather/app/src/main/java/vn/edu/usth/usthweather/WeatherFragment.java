@@ -1,12 +1,25 @@
 package vn.edu.usth.usthweather;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -55,10 +68,53 @@ public class WeatherFragment extends Fragment {
         }
     }
 
+    private TextView weatherTextView;
+    private RequestQueue queue;
+
+    @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_weather, container, false);
+        View view = inflater.inflate(R.layout.fragment_weather, container, false);
+        weatherTextView = view.findViewById(R.id.weatherTextView);
+        queue = Volley.newRequestQueue(getActivity());
+        fetchWeatherData();
+        return view;
+    }
+    private void fetchWeatherData() {
+        // Ask Yahoo for real weather
+        String url = " https://developer.yahoo.com/weather/";
+        // Decode its Json data
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.GET,
+                url,
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            // Parse JSON data
+                            JSONObject currentObservation = response.getJSONObject("current_observation");
+                            String temperature = currentObservation.getString("temperature");
+                            String condition = currentObservation.getString("condition");
+                            // Display data
+                            weatherTextView.setText("Temperature: " + temperature + "°C\nCondition: " + condition);
+                        } catch (JSONException e) {
+                            Log.e("WeatherFragment", "JSON parsing error: " + e.getMessage());
+                            Toast.makeText(getActivity(), "Error parsing weather data", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("WeatherFragment", "Error fetching weather data: " + error.getMessage());
+                        Toast.makeText(getActivity(), "Failed to fetch weather data", Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
+        // Add the request to the RequestQueue
+        queue.add(jsonObjectRequest);
     }
 }
